@@ -1,27 +1,87 @@
-pragma solidity 0.6.12;
+/**
+ *Submitted for verification at polygonscan.com on 2021-06-13
+*/
 
+// File: @openzeppelin\contracts\token\ERC20\IERC20.sol
 
 // SPDX-License-Identifier: MIT
-/*
- * @dev Provides information about the current execution context, including the
- * sender of the transaction and its data. While these are generally available
- * via msg.sender and msg.data, they should not be accessed in such a direct
- * manner, since when dealing with GSN meta-transactions the account sending and
- * paying for execution may not be the actual sender (as far as an application
- * is concerned).
- *
- * This contract is only required for intermediate, library-like contracts.
- */
-abstract contract Context {
-    function _msgSender() internal view virtual returns (address payable) {
-        return msg.sender;
-    }
 
-    function _msgData() internal view virtual returns (bytes memory) {
-        this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691
-        return msg.data;
-    }
+pragma solidity 0.6.12;
+
+/**
+ * @dev Interface of the ERC20 standard as defined in the EIP.
+ */
+interface IERC20 {
+    /**
+     * @dev Returns the amount of tokens in existence.
+     */
+    function totalSupply() external view returns (uint256);
+
+    /**
+     * @dev Returns the amount of tokens owned by `account`.
+     */
+    function balanceOf(address account) external view returns (uint256);
+
+    /**
+     * @dev Moves `amount` tokens from the caller's account to `recipient`.
+     *
+     * Returns a boolean value indicating whether the operation succeeded.
+     *
+     * Emits a {Transfer} event.
+     */
+    function transfer(address recipient, uint256 amount) external returns (bool);
+
+    /**
+     * @dev Returns the remaining number of tokens that `spender` will be
+     * allowed to spend on behalf of `owner` through {transferFrom}. This is
+     * zero by default.
+     *
+     * This value changes when {approve} or {transferFrom} are called.
+     */
+    function allowance(address owner, address spender) external view returns (uint256);
+
+    /**
+     * @dev Sets `amount` as the allowance of `spender` over the caller's tokens.
+     *
+     * Returns a boolean value indicating whether the operation succeeded.
+     *
+     * IMPORTANT: Beware that changing an allowance with this method brings the risk
+     * that someone may use both the old and the new allowance by unfortunate
+     * transaction ordering. One possible solution to mitigate this race
+     * condition is to first reduce the spender's allowance to 0 and set the
+     * desired value afterwards:
+     * https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
+     *
+     * Emits an {Approval} event.
+     */
+    function approve(address spender, uint256 amount) external returns (bool);
+
+    /**
+     * @dev Moves `amount` tokens from `sender` to `recipient` using the
+     * allowance mechanism. `amount` is then deducted from the caller's
+     * allowance.
+     *
+     * Returns a boolean value indicating whether the operation succeeded.
+     *
+     * Emits a {Transfer} event.
+     */
+    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
+
+    /**
+     * @dev Emitted when `value` tokens are moved from one account (`from`) to
+     * another (`to`).
+     *
+     * Note that `value` may be zero.
+     */
+    event Transfer(address indexed from, address indexed to, uint256 value);
+
+    /**
+     * @dev Emitted when the allowance of a `spender` for an `owner` is set by
+     * a call to {approve}. `value` is the new allowance.
+     */
+    event Approval(address indexed owner, address indexed spender, uint256 value);
 }
+
 
 /**
  * @dev Wrappers over Solidity's arithmetic operations with added overflow
@@ -234,6 +294,7 @@ library SafeMath {
     }
 }
 
+
 /**
  * @dev Library for managing
  * https://en.wikipedia.org/wiki/Set_(abstract_data_type)[sets] of primitive
@@ -349,16 +410,16 @@ library EnumerableSet {
         return set._values.length;
     }
 
-   /**
-    * @dev Returns the value stored at position `index` in the set. O(1).
-    *
-    * Note that there are no guarantees on the ordering of values inside the
-    * array, and it may change when more values are added or removed.
-    *
-    * Requirements:
-    *
-    * - `index` must be strictly less than {length}.
-    */
+    /**
+     * @dev Returns the value stored at position `index` in the set. O(1).
+     *
+     * Note that there are no guarantees on the ordering of values inside the
+     * array, and it may change when more values are added or removed.
+     *
+     * Requirements:
+     *
+     * - `index` must be strictly less than {length}.
+     */
     function _at(Set storage set, uint256 index) private view returns (bytes32) {
         require(set._values.length > index, "EnumerableSet: index out of bounds");
         return set._values[index];
@@ -404,16 +465,16 @@ library EnumerableSet {
         return _length(set._inner);
     }
 
-   /**
-    * @dev Returns the value stored at position `index` in the set. O(1).
-    *
-    * Note that there are no guarantees on the ordering of values inside the
-    * array, and it may change when more values are added or removed.
-    *
-    * Requirements:
-    *
-    * - `index` must be strictly less than {length}.
-    */
+    /**
+     * @dev Returns the value stored at position `index` in the set. O(1).
+     *
+     * Note that there are no guarantees on the ordering of values inside the
+     * array, and it may change when more values are added or removed.
+     *
+     * Requirements:
+     *
+     * - `index` must be strictly less than {length}.
+     */
     function at(Bytes32Set storage set, uint256 index) internal view returns (bytes32) {
         return _at(set._inner, index);
     }
@@ -458,16 +519,16 @@ library EnumerableSet {
         return _length(set._inner);
     }
 
-   /**
-    * @dev Returns the value stored at position `index` in the set. O(1).
-    *
-    * Note that there are no guarantees on the ordering of values inside the
-    * array, and it may change when more values are added or removed.
-    *
-    * Requirements:
-    *
-    * - `index` must be strictly less than {length}.
-    */
+    /**
+     * @dev Returns the value stored at position `index` in the set. O(1).
+     *
+     * Note that there are no guarantees on the ordering of values inside the
+     * array, and it may change when more values are added or removed.
+     *
+     * Requirements:
+     *
+     * - `index` must be strictly less than {length}.
+     */
     function at(AddressSet storage set, uint256 index) internal view returns (address) {
         return address(uint160(uint256(_at(set._inner, index))));
     }
@@ -513,20 +574,22 @@ library EnumerableSet {
         return _length(set._inner);
     }
 
-   /**
-    * @dev Returns the value stored at position `index` in the set. O(1).
-    *
-    * Note that there are no guarantees on the ordering of values inside the
-    * array, and it may change when more values are added or removed.
-    *
-    * Requirements:
-    *
-    * - `index` must be strictly less than {length}.
-    */
+    /**
+     * @dev Returns the value stored at position `index` in the set. O(1).
+     *
+     * Note that there are no guarantees on the ordering of values inside the
+     * array, and it may change when more values are added or removed.
+     *
+     * Requirements:
+     *
+     * - `index` must be strictly less than {length}.
+     */
     function at(UintSet storage set, uint256 index) internal view returns (uint256) {
         return uint256(_at(set._inner, index));
     }
 }
+
+
 
 /**
  * @dev Collection of functions related to the address type
@@ -603,7 +666,7 @@ library Address {
      * _Available since v3.1._
      */
     function functionCall(address target, bytes memory data) internal returns (bytes memory) {
-      return functionCall(target, data, "Address: low-level call failed");
+        return functionCall(target, data, "Address: low-level call failed");
     }
 
     /**
@@ -713,6 +776,32 @@ library Address {
         }
     }
 }
+
+
+
+/*
+ * @dev Provides information about the current execution context, including the
+ * sender of the transaction and its data. While these are generally available
+ * via msg.sender and msg.data, they should not be accessed in such a direct
+ * manner, since when dealing with GSN meta-transactions the account sending and
+ * paying for execution may not be the actual sender (as far as an application
+ * is concerned).
+ *
+ * This contract is only required for intermediate, library-like contracts.
+ */
+abstract contract Context {
+    function _msgSender() internal view virtual returns (address payable) {
+        return msg.sender;
+    }
+
+    function _msgData() internal view virtual returns (bytes memory) {
+        this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691
+        return msg.data;
+    }
+}
+
+
+
 
 /**
  * @dev Contract module that allows children to implement role-based access
@@ -924,6 +1013,7 @@ abstract contract AccessControl is Context {
     }
 }
 
+
 /**
  * @notice Access Controls contract for the Digitalax Platform
  * @author BlockRocket.tech
@@ -1010,9 +1100,9 @@ contract DigitalaxAccessControls is AccessControl {
      * @return bool True if the account has the role or false if it does not
      */
     function hasVerifiedMinterRole(address _address)
-        external
-        view
-        returns (bool)
+    external
+    view
+    returns (bool)
     {
         return hasRole(VERIFIED_MINTER_ROLE, _address);
     }
@@ -1111,286 +1201,293 @@ contract DigitalaxAccessControls is AccessControl {
     }
 }
 
-interface IOracle {
-    function getData() external returns (uint256, bool);
-}
 
-library Select {
-    using SafeMath for uint256;
-
-    /**
-     * @dev Sorts the input array up to the denoted size, and returns the median.
-     * @param array Input array to compute its median.
-     * @param size Number of elements in array to compute the median for.
-     * @return Median of array.
-     */
-    function computeMedian(uint256[] memory array, uint256 size)
-        internal
-        pure
-        returns (uint256)
-    {
-        require(size > 0 && array.length >= size);
-        for (uint256 i = 1; i < size; i++) {
-            for (uint256 j = i; j > 0 && array[j-1]  > array[j]; j--) {
-                uint256 tmp = array[j];
-                array[j] = array[j-1];
-                array[j-1] = tmp;
-            }
-        }
-        if (size % 2 == 1) {
-            return array[size / 2];
-        } else {
-            return array[size / 2].add(array[size / 2 - 1]) / 2;
-        }
-    }
-}
 
 /**
- * @title Deco Oracle
- *
- * @notice Provides a value onchain that's aggregated from a whitelisted set of
- *         providers.
+ * a contract must implement this interface in order to support relayed transaction.
+ * It is better to inherit the BaseRelayRecipient as its implementation.
  */
-contract DecoOracle is IOracle, Context {
-    using SafeMath for uint256;
+abstract contract IRelayRecipient {
 
-    struct Report {
-        uint256 timestamp;
-        uint256 payload;
+    /**
+     * return if the forwarder is trusted to forward relayed transactions to us.
+     * the forwarder is required to verify the sender's signature, and verify
+     * the call is not a replay.
+     */
+    function isTrustedForwarder(address forwarder) public virtual view returns(bool);
+
+    /**
+     * return the sender of this call.
+     * if the call came through our trusted forwarder, then the real sender is appended as the last 20 bytes
+     * of the msg.data.
+     * otherwise, return `msg.sender`
+     * should be used in the contract anywhere instead of msg.sender
+     */
+    function msgSender() internal virtual view returns (address payable);
+
+    function versionRecipient() external virtual view returns (string memory);
+}
+
+
+
+/**
+ * A base contract to be inherited by any contract that want to receive relayed transactions
+ * A subclass must use "_msgSender()" instead of "msg.sender"
+ */
+abstract contract BaseRelayRecipient is IRelayRecipient {
+
+    /*
+     * Forwarder singleton we accept calls from
+     */
+    address public trustedForwarder;
+
+    /*
+     * require a function to be called through GSN only
+     */
+    modifier trustedForwarderOnly() {
+        require(msg.sender == address(trustedForwarder), "Function can only be called through the trusted Forwarder");
+        _;
     }
 
-    // Addresses of providers authorized to push reports.
-    address[] public providers;
+    function isTrustedForwarder(address forwarder) public override view returns(bool) {
+        return forwarder == trustedForwarder;
+    }
 
-    // Digitalax Access Controls
+    /**
+     * return the sender of this call.
+     * if the call came through our trusted forwarder, return the original sender.
+     * otherwise, return `msg.sender`.
+     * should be used in the contract anywhere instead of msg.sender
+     */
+    function msgSender() internal override view returns (address payable ret) {
+        if (msg.data.length >= 24 && isTrustedForwarder(msg.sender)) {
+            // At this point we know that the sender is a trusted forwarder,
+            // so we trust that the last bytes of msg.data are the verified sender address.
+            // extract sender address from the end of msg.data
+            assembly {
+                ret := shr(96,calldataload(sub(calldatasize(),20)))
+            }
+        } else {
+            return msg.sender;
+        }
+    }
+}
+
+
+contract GDN is IERC20, BaseRelayRecipient{
+    using SafeMath for uint;
+
+    string _symbol;
+    string  _name;
+    uint8 _decimals;
+    uint _totalSupply;
+    mapping(address => uint) balances;
+
+    mapping(address => mapping(address => uint)) allowed;
+    uint public cap;
+    bool public freezeCap;
+    bool public depositEnabled;
+
     DigitalaxAccessControls public accessControls;
 
-    // Reports indexed by provider address. Report[0].timestamp > 0
-    // indicates provider existence.
-    mapping (address => Report[2]) public providerReports;
+    event CapUpdated(uint256 cap, bool freezeCap);
 
-    event ProviderAdded(address provider);
-    event ProviderRemoved(address provider);
-    event ReportTimestampOutOfRange(address provider);
-    event ProviderReportPushed(address indexed provider, uint256 payload, uint256 timestamp);
+    event Deposit(
+        address indexed token,
+        address indexed from,
+        uint256 amount,
+        uint256 output1
+    );
 
-    // The number of seconds after which the report is deemed expired.
-    uint256 public reportExpirationTimeSec;
+    event Withdraw(
+        address indexed token,
+        address indexed from,
+        uint256 amount,
+        uint256 output1
+    );
 
-    // The number of seconds since reporting that has to pass before a report
-    // is usable.
-    uint256 public reportDelaySec;
+    address public childChain;
 
-    // The minimum number of providers with valid reports to consider the
-    // aggregate report valid.
-    uint256 public minimumProviders = 1;
+    modifier onlyChildChain() {
+        require(
+            msg.sender == childChain,
+            "Child token: caller is not the child chain contract"
+        );
+        _;
+    }
 
-    // Timestamp of 1 is used to mark uninitialized and invalidated data.
-    // This is needed so that timestamp of 1 is always considered expired.
-    uint256 private constant MAX_REPORT_EXPIRATION_TIME = 520 weeks;
-
-    /**
-    * @param reportExpirationTimeSec_ The number of seconds after which the
-    *                                 report is deemed expired.
-    * @param reportDelaySec_ The number of seconds since reporting that has to
-    *                        pass before a report is usable
-    * @param minimumProviders_ The minimum number of providers with valid
-    *                          reports to consider the aggregate report valid.
-    */
-    constructor(uint256 reportExpirationTimeSec_,
-                uint256 reportDelaySec_,
-                uint256 minimumProviders_,
-                DigitalaxAccessControls accessControls_)
-        public
+    constructor(
+        string memory symbol_,
+        string memory name_,
+        uint8 decimals_,
+        DigitalaxAccessControls accessControls_,
+        address tokenOwner,
+        uint256 initialSupply,
+        address childChain_,
+        address trustedForwarder_
+    )
+    public
     {
-        require(reportExpirationTimeSec_ <= MAX_REPORT_EXPIRATION_TIME, "DecoOracle: Invalid report exipiration time");
-        require(minimumProviders_ > 0, "DecoOracle: Minimum providers count might be greater than zero");
-        require(address(accessControls_) != address(0x0), "DecoOracle: AccessControls is invalid");
-        reportExpirationTimeSec = reportExpirationTimeSec_;
-        reportDelaySec = reportDelaySec_;
-        minimumProviders = minimumProviders_;
+        _symbol = symbol_;
+        _name = name_;
+        _decimals = decimals_;
         accessControls = accessControls_;
+        balances[tokenOwner] = initialSupply;
+        _totalSupply = initialSupply;
+        childChain = childChain_;
+        trustedForwarder = trustedForwarder_;
+        emit Transfer(address(0), tokenOwner, _totalSupply);
     }
 
-     /**
-     * @notice Sets the report expiration period.
-     * @param reportExpirationTimeSec_ The number of seconds after which the
-     *        report is deemed expired.
-     */
-    function setReportExpirationTimeSec(uint256 reportExpirationTimeSec_) external
-    {
+    /**
+    * Override this function.
+    * This version is to keep track of BaseRelayRecipient you are using
+     * in your contract.
+    */
+    function versionRecipient() external view override returns (string memory) {
+        return "1";
+    }
+
+    function symbol() external view returns (string memory) {
+        return _symbol;
+    }
+    function name() external view returns (string memory) {
+        return _name;
+    }
+    function decimals() external view returns (uint8) {
+        return _decimals;
+    }
+    function totalSupply() override external view returns (uint) {
+        return _totalSupply.sub(balances[address(0)]);
+    }
+    function balanceOf(address tokenOwner) override public view returns (uint balance) {
+        return balances[tokenOwner];
+    }
+    function transfer(address to, uint tokens) override external returns (bool success) {
+        balances[_msgSender()] = balances[_msgSender()].sub(tokens);
+        balances[to] = balances[to].add(tokens);
+        emit Transfer(_msgSender(), to, tokens);
+        return true;
+    }
+    function approve(address spender, uint tokens) override external returns (bool success) {
+        allowed[_msgSender()][spender] = tokens;
+        emit Approval(_msgSender(), spender, tokens);
+        return true;
+    }
+    function transferFrom(address from, address to, uint tokens) override external returns (bool success) {
+        balances[from] = balances[from].sub(tokens);
+        allowed[from][_msgSender()] = allowed[from][_msgSender()].sub(tokens);
+        balances[to] = balances[to].add(tokens);
+        emit Transfer(from, to, tokens);
+        return true;
+    }
+    function allowance(address tokenOwner, address spender) override external view returns (uint remaining) {
+        return allowed[tokenOwner][spender];
+    }
+
+    function setTrustedForwarder(address _trustedForwarder) external  {
         require(
             accessControls.hasAdminRole(_msgSender()),
-            "DecoOracle.setReportExpirationTimeSec: Sender must be admin"
+            "GDN.setTrustedForwarder: Sender must be admin"
         );
-        require(reportExpirationTimeSec_ <= MAX_REPORT_EXPIRATION_TIME, "DecoOracle.setReportExpirationTimeSec: Invalid expiration time");
-        reportExpirationTimeSec = reportExpirationTimeSec_;
+        trustedForwarder = _trustedForwarder;
     }
 
-    /**
-    * @notice Sets the time period since reporting that has to pass before a
-    *         report is usable.
-    * @param reportDelaySec_ The new delay period in seconds.
-    */
-    function setReportDelaySec(uint256 reportDelaySec_) external
+    // This is to support Native meta transactions
+    // never use msg.sender directly, use _msgSender() instead
+    function _msgSender()
+    internal
+    view
+    returns (address payable sender)
     {
+        return BaseRelayRecipient.msgSender();
+    }
+
+    function setCap(uint _cap, bool _freezeCap) external  {
         require(
             accessControls.hasAdminRole(_msgSender()),
-            "DecoOracle.setReportDelaySec: Sender must be admin"
+            "GDN.setCap: Sender must be admin"
         );
-        reportDelaySec = reportDelaySec_;
+        require(_freezeCap || _cap >= _totalSupply, "Cap less than totalSupply");
+        require(!freezeCap, "Cap frozen");
+        (cap, freezeCap) = (_cap, _freezeCap);
+        emit CapUpdated(cap, freezeCap);
     }
 
-    /**
-    * @notice Sets the minimum number of providers with valid reports to
-    *         consider the aggregate report valid.
-    * @param minimumProviders_ The new minimum number of providers.
-    */
-    function setMinimumProviders(uint256 minimumProviders_) external
-    {
+
+    function setDepositEnabled(bool _depositEnabled) external  {
         require(
             accessControls.hasAdminRole(_msgSender()),
-            "DecoOracle.setMinimumProviders: Sender must be admin"
+            "GDN.setDepositEnabled: Sender must be admin"
         );
-        require(minimumProviders_ > 0);
-        minimumProviders = minimumProviders_;
+        depositEnabled = _depositEnabled;
     }
 
-    /**
-     * @notice Pushes a report for the calling provider.
-     * @param payload is expected to be 18 decimal fixed point number.
-     */
-    function pushReport(uint256 payload) external
-    {
-        address providerAddress = msg.sender;
-        Report[2] storage reports = providerReports[providerAddress];
-        uint256[2] memory timestamps = [reports[0].timestamp, reports[1].timestamp];
 
-        require(timestamps[0] > 0);
-
-        uint8 index_recent = timestamps[0] >= timestamps[1] ? 0 : 1;
-        uint8 index_past = 1 - index_recent;
-
-        // Check that the push is not too soon after the last one.
-        require(timestamps[index_recent].add(reportDelaySec) <= now);
-
-        reports[index_past].timestamp = now;
-        reports[index_past].payload = payload;
-
-        emit ProviderReportPushed(providerAddress, payload, now);
+    function _mint(address tokenOwner, uint tokens) internal virtual returns (bool success) {
+        require(tokenOwner != address(0), "ERC20: mint to the zero address");
+        require(cap == 0 || _totalSupply + tokens <= cap, "Cap exceeded");
+        balances[tokenOwner] = balances[tokenOwner].add(tokens);
+        _totalSupply = _totalSupply.add(tokens);
+        emit Transfer(address(0), tokenOwner, tokens);
+        return true;
     }
 
-    /**
-    * @notice Invalidates the reports of the calling provider.
-    */
-    function purgeReports() external
-    {
-        address providerAddress = msg.sender;
-        require (providerReports[providerAddress][0].timestamp > 0);
-        providerReports[providerAddress][0].timestamp=1;
-        providerReports[providerAddress][1].timestamp=1;
-    }
 
-    /**
-    * @notice Computes median of provider reports whose timestamps are in the
-    *         valid timestamp range.
-    * @return AggregatedValue: Median of providers reported values.
-    *         valid: Boolean indicating an aggregated value was computed successfully.
-    */
-    function getData()
-        external
-        override
-        returns (uint256, bool)
-    {
-        uint256 reportsCount = providers.length;
-        uint256[] memory validReports = new uint256[](reportsCount);
-        uint256 size = 0;
-        uint256 minValidTimestamp =  now.sub(reportExpirationTimeSec);
-        uint256 maxValidTimestamp =  now.sub(reportDelaySec);
-
-        for (uint256 i = 0; i < reportsCount; i++) {
-            address providerAddress = providers[i];
-            Report[2] memory reports = providerReports[providerAddress];
-
-            uint8 index_recent = reports[0].timestamp >= reports[1].timestamp ? 0 : 1;
-            uint8 index_past = 1 - index_recent;
-            uint256 reportTimestampRecent = reports[index_recent].timestamp;
-            if (reportTimestampRecent > maxValidTimestamp) {
-                // Recent report is too recent.
-                uint256 reportTimestampPast = providerReports[providerAddress][index_past].timestamp;
-                if (reportTimestampPast < minValidTimestamp) {
-                    // Past report is too old.
-                    emit ReportTimestampOutOfRange(providerAddress);
-                } else if (reportTimestampPast > maxValidTimestamp) {
-                    // Past report is too recent.
-                    emit ReportTimestampOutOfRange(providerAddress);
-                } else {
-                    // Using past report.
-                    validReports[size++] = providerReports[providerAddress][index_past].payload;
-                }
+    function availableToMint() external view returns (uint tokens) {
+        if (accessControls.hasMinterRole(_msgSender())) {
+            if (cap > 0) {
+                tokens = cap.sub(_totalSupply.sub(balances[address(0)]));
             } else {
-                // Recent report is not too recent.
-                if (reportTimestampRecent < minValidTimestamp) {
-                    // Recent report is too old.
-                    emit ReportTimestampOutOfRange(providerAddress);
-                } else {
-                    // Using recent report.
-                    validReports[size++] = providerReports[providerAddress][index_recent].payload;
-                }
-            }
-        }
-
-        if (size < minimumProviders) {
-            return (0, false);
-        }
-
-        return (Select.computeMedian(validReports, size), true);
-    }
-
-    /**
-     * @notice Authorizes a provider.
-     * @param provider Address of the provider.
-     */
-    function addProvider(address provider) external
-    {
-        require(
-            accessControls.hasAdminRole(_msgSender()),
-            "DecoOracle.addProvider: Sender must be admin"
-        );
-        require(providerReports[provider][0].timestamp == 0);
-        providers.push(provider);
-        providerReports[provider][0].timestamp = 1;
-        emit ProviderAdded(provider);
-    }
-
-    /**
-     * @notice Revokes provider authorization.
-     * @param provider Address of the provider.
-     */
-    function removeProvider(address provider) external
-    {
-        require(
-            accessControls.hasAdminRole(_msgSender()),
-            "DecoOracle.removeProvider: Sender must be admin"
-        );
-        delete providerReports[provider];
-        for (uint256 i = 0; i < providers.length; i++) {
-            if (providers[i] == provider) {
-                if (i + 1  != providers.length) {
-                    providers[i] = providers[providers.length-1];
-                }
-                providers.pop();
-                emit ProviderRemoved(provider);
-                break;
+                tokens = uint(-1);
             }
         }
     }
 
+    function mint(address tokenOwner, uint tokens) external returns (bool success) {
+        require(
+            accessControls.hasMinterRole(_msgSender()),
+            "GDN.mint: Sender must have permission to mint"
+        );
+        return _mint(tokenOwner, tokens);
+    }
+
+
+
+    function burn(uint tokens) public returns (bool success) {
+        balances[_msgSender()] = balances[_msgSender()].sub(tokens);
+        _totalSupply = _totalSupply.sub(tokens);
+        emit Transfer(_msgSender(), address(0), tokens);
+        return true;
+    }
+
     /**
-     * @return The number of authorized providers.
-     */
-    function providersSize() external view returns (uint256)
-    {
-        return providers.length;
+    * Deposit tokens
+    *
+    * ChildChainManagerProxy -
+    * Mumbai - 0xb5505a6d998549090530911180f38aC5130101c6
+    * MainNet - 0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa
+     * @notice called when token is deposited on root chain
+   * @dev Should be callable only by ChildChainManager
+   * Should handle deposit by minting the required amount for user
+   * Make sure minting is done only by this function
+   * @param user user address for whom deposit is being done
+   * @param depositData abi encoded amount
+    */
+    function deposit(address user, bytes calldata depositData) external onlyChildChain {
+        require(depositEnabled, "Deposit is not enabled");
+        uint256 amount = abi.decode(depositData, (uint256));
+        _mint(user, amount);
+        emit Deposit(address(this), user, amount, balanceOf(user));
+    }
+
+    /**
+    * Withdraw tokens
+    *
+    * @param amount tokens
+    */
+    function withdraw(uint256 amount) public payable {
+        burn(amount);
+        emit Withdraw(address(this), _msgSender(), amount, balanceOf(_msgSender()));
     }
 }

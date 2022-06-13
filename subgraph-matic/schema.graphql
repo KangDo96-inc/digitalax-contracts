@@ -558,9 +558,68 @@ type DigitalaxSubscriptionDesignerIndex @entity {
   infoUrl: String!
 }
 
+type ClapHistory @entity {
+  id: ID!
+  owner: String
+  timestamp: BigInt
+  claps: BigInt
+}
+
 type PodeNFTv2Staker @entity {
   id: ID!
+  totalAppraisals: BigInt
+  totalStaked: BigInt
+  totalFollowed: BigInt
+  totalFavourites: BigInt
+  totalMetaverse: BigInt
+  totalShare: BigInt
+  clapHistory: [ClapHistory!]
   garments: [PodeNFTv2!]!
+  rewardsClaimed: BigInt!
+}
+
+type GuildNFTWeight @entity {
+  id: ID!
+  totalAppraisals: BigInt!
+  totalFollowed: BigInt!
+  totalFavourites: BigInt!
+  totalMetaverse: BigInt!
+  totalShare: BigInt!
+  totalSkips: BigInt!
+  totalClaps: BigInt!
+}
+
+type GuildWhitelistedNFT @entity {
+  id: ID!
+  tokenAddress: String!
+  owner: String!
+  tokenUri: String!
+  animation: String!
+  image: String
+  name: String!
+  description: String!
+  timestamp: BigInt
+}
+
+type GDNMembershipNFT @entity {
+  id: ID!
+  owner: Bytes!
+  name: String!
+  description: String!
+  image: String!
+  animation: String!
+  tokenUri: String!
+  attributes: [GarmentAttribute!]!
+}
+
+type GuildWhitelistedToken @entity {
+  id: ID!
+  name: String!
+}
+
+type GuildWhitelistedNFTStaker @entity {
+  id: ID!
+  garments: [GuildWhitelistedNFT!]!
   rewardsClaimed: BigInt!
 }
 
@@ -568,4 +627,15 @@ type PayableTokenReport @entity {
   id: ID!
   payload: BigInt!
   timestamp: BigInt!
+}
+
+type DigitalaxLookGoldenTicket @entity {
+  id: ID!
+  name: String!
+  owner: Bytes!
+  description: String!
+  animation: String!
+  image: String!
+  attributes: [GarmentAttribute!]!
+  tokenUri: String!
 }

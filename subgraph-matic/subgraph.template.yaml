@@ -617,6 +617,41 @@ dataSources:
           handler: handleRewardPaid
       file: ./src/GuildNFTStaking.mapping.ts
   - kind: ethereum/contract
+    name: GuildWhitelistedNFTStaking
+    network: "{{network}}"
+    source:
+      address: "{{GuildWhitelistedNFTStakingAddress}}"
+      abi: GuildWhitelistedNFTStaking
+      startBlock: {{GuildWhitelistedNFTStakingStartBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - Staked
+        - Unstaked
+        - EmergencyUnstake
+        - RewardPaid
+        - AddWhitelistedTokens
+      abis:
+        - name: GuildWhitelistedNFTStaking
+          file: ./abis/GuildWhitelistedNFTStaking.json
+        - name: ERC721
+          file: ./abis/ERC721.json
+      eventHandlers:
+        - event: Staked(address,address,uint256)
+          handler: handleStaked
+        - event: Unstaked(address,address,uint256)
+          handler: handleUnstaked
+        - event: EmergencyUnstake(indexed address,address,uint256)
+          handler: handleEmergencyUnstake
+        - event: RewardPaid(indexed address,uint256)
+          handler: handleRewardPaid
+        - event: AddWhitelistedTokens(address[])
+          handler: handleAddWhitelistedTokens
+      file: ./src/GuildWhitelistedNFTStaking.mapping.ts
+
+  - kind: ethereum/contract
     name: PodeNFTv2
     network: "{{network}}"
     source:
@@ -693,3 +728,66 @@ dataSources:
         - event: OfferCancelled(indexed uint256)
           handler: handleOfferCancelled
       file: ./src/DripMarketplace.mapping.ts
+  - kind: ethereum/contract
+    name: GuildNFTStakingWeightV2
+    network: "{{network}}"
+    source:
+      address: "{{GuildNFTStakingWeightV2Address}}"
+      abi: GuildNFTStakingWeightV2
+      startBlock: {{GuildNFTStakingWeightV2StartBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - AppraiseGuildMember
+        - WhitelistedNFTReaction
+      abis:
+        - name: GuildNFTStakingWeightV2
+          file: ./abis/GuildNFTStakingWeightV2.json
+      eventHandlers:
+        - event: AppraiseGuildMember(string,address)
+          handler: handleAppraiseGuildMember
+        - event: WhitelistedNFTReaction(string,uint256,address,uint256)
+          handler: handleWhitelistedNFTReaction
+      file: ./src/GuildNFTStakingWeightV2.mapping.ts
+  - kind: ethereum/contract
+    name: GDNMembershipNFT
+    network: "{{network}}"
+    source:
+      address: "{{GDNMembershipNFTAddress}}"
+      abi: GDNMembershipNFT
+      startBlock: {{GDNMembershipNFTStartBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasam/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: GDNMembershipNFT
+          file: ./abis/GDNMembershipNFT.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/GDNMembershipNFT.mapping.ts
+  - kind: ethereum/contract
+    name: LookGoldenTicket
+    network: "{{network}}"
+    source:
+      address: "{{LookGoldenTicketAddress}}"
+      abi: LookGoldenTicket
+      startBlock: {{LookGoldenTicketStartBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasam/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: LookGoldenTicket
+          file: ./abis/LookGoldenTicket.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/LookGoldenTicket.mapping.ts
